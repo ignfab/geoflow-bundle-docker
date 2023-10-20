@@ -47,5 +47,5 @@ jobs:
           JOBS=2
           VERSION=${{ env.VERSION }}
         push: true
-        tags: ${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+        tags: ${{ env.REGISTRY }}/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
 
