@@ -1,4 +1,4 @@
-name: build base image
+name: build lod22 images
 
 on:
   workflow_dispatch:
@@ -6,21 +6,35 @@ on:
       name:
         description: "For what reason ?"
         default: "Testing"
-  push:
-    branches: [master]
-    paths: ['base.dockerfile']
+  workflow_run:
+    workflows:
+    - "build builder image"
 
 env:
-  IMAGE_NAME: geoflow-bundle-base
+  IMAGE_NAME: geoflow-bundle-builder
   USER_NAME: ignfab
   VERSION: latest
 
+
 jobs:
-  build-and-push-image:
+  build-and-push-images:
+    strategy:
+      matrix:
+        include:
+        - dockerfile: lod22-reconstruct.dockerfile
+          tags: ignfab/lod22-reconstruct:latest
+        - dockerfile: lod22-reconstruct-batch.dockerfile
+          tags: ignfab/lod22-reconstruct-batch:latest
+        - dockerfile: lod22-reconstruct-stream.dockerfile
+          tags: ignfab/lod22-reconstruct-stream:latest
+
+
     runs-on: ubuntu-latest
+
     permissions:
       contents: read
       packages: write
+
     steps:
 
     # Clone project and recursively get submodules
@@ -39,9 +53,9 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: ./
-        file: ./base.dockerfile
+        file: ${{ matrix.dockerfile }}
         build-args: |
           JOBS=2
           VERSION=${{ env.VERSION }}
         push: true
-        tags: ${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+        tags: ${{ matrix.tags }}

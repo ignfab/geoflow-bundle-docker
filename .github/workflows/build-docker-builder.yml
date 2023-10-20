@@ -1,4 +1,4 @@
-name: build base image
+name: build builder image
 
 on:
   workflow_dispatch:
@@ -6,12 +6,12 @@ on:
       name:
         description: "For what reason ?"
         default: "Testing"
-  push:
-    branches: [master]
-    paths: ['base.dockerfile']
+  workflow_run:
+    workflows:
+    - "build base image"
 
 env:
-  IMAGE_NAME: geoflow-bundle-base
+  IMAGE_NAME: geoflow-bundle-builder
   USER_NAME: ignfab
   VERSION: latest
 
@@ -39,7 +39,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: ./
-        file: ./base.dockerfile
+        file: ./builder.dockerfile
         build-args: |
           JOBS=2
           VERSION=${{ env.VERSION }}
