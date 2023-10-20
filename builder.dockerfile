@@ -1,4 +1,4 @@
-FROM 3dgi/geoflow-bundle-base:2023.03.15
+FROM ignfab/geoflow-bundle-base:latest
 ARG VERSION
 LABEL org.opencontainers.image.authors="Balázs Dukai <balazs.dukai@3dgi.nl>"
 LABEL org.opencontainers.image.vendor="3DGI"
@@ -21,6 +21,9 @@ COPY ./flowcharts $geoflow_src/flowcharts
 COPY ./geoflow $geoflow_src/geoflow
 COPY ./plugins $geoflow_src/plugins
 COPY ./CMakeLists.txt ./strip-docker-image-export $geoflow_src/
+
+RUN ls /usr/src/geoflow-bundle/plugins/gfp-val3dity/thirdparty/val3dity
+
 
 # Need to explicitly create the plugin directory
 RUN chmod 1777 $geoflow_src && \
