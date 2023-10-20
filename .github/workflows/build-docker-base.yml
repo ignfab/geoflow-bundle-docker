@@ -11,7 +11,6 @@ on:
     paths: ['base.dockerfile']
 
 env:
-  REGISTRY: ghcr.io
   IMAGE_NAME: geoflow-bundle-base
   USER_NAME: ignfab
   VERSION: latest
@@ -30,14 +29,12 @@ jobs:
       with:
         submodules: recursive
 
-    # Get access to Github registry
-    - name: Login to the container registry
+    - name: Login to the dockerhub registry
       uses: docker/login-action@v2
       with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+          
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
@@ -47,5 +44,4 @@ jobs:
           JOBS=2
           VERSION=${{ env.VERSION }}
         push: true
-        tags: ${{ env.REGISTRY }}/${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
-
+        tags: ${{ env.USER_NAME }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
