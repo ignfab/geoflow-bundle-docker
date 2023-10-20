@@ -1,6 +1,11 @@
 name: Docker IGNfab Geoflow bundle base Image
 
 on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "For what reason ?"
+        default: "Testing"
   push:
     branches: [master]
     paths: ['base.dockerfile']
