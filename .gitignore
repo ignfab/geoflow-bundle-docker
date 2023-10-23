@@ -21,3 +21,8 @@ plugins/gfp-building-reconstruction/build
 plugins/gfp-gdal/build
 plugins/gfp-las/build
 plugins/gfp-val3dity/build
+
+# IGNfab tests
+test-data/
+test-data-batch/
+geoflow_estonia/

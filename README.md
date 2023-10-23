@@ -2,6 +2,14 @@
 
 ![3D model from point cloud](docs/img/pc_to_model.png)
 
+> This is a sample project to demonstrate the use of geoflow bundle docker images
+> * 2 new images have been created to use the geoflow batch or stream workflows
+> * A `build_docker_images.sh` script is provided to build the images locally
+> * Github actions have been modified to build all images with the ignfab user on dockerhub
+> * A new directory `docker_images_usage` has been added containing examples to run geoflow on different datasets
+
+
+
 *A tool for reconstructing 3D building models from point clouds, fully automated, with high-detail. Free and open-source.*
 
 ## TLDR;
